@@ -1,0 +1,140 @@
+<div class="container card scalein animation-duration-1000">
+  <h2>Registro de I</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered">
+      <caption>
+        <div class="d-flex justify-content-between">
+          <div class="input-group mb-2">
+            <span class="input-group-text"><i class="pi pi-search"></i></span>
+            <input
+            type="search"
+            class="form-control"
+            #searchInput
+            (input)="filtrarInventario(searchInput.value)"
+            placeholder="Buscar"
+          />
+
+          </div>
+          <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#exampleModal">Agregar</button>
+        </div>
+      </caption>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>responsable</th>
+
+          <th>categoria</th>
+          <th>producto</th>
+          <th>marca</th>
+          <th>serial</th>
+          <th>detalle</th>
+          <th>imagen</th>
+          <th>Acciones</th>
+          // id_proyecto: number;
+          // responsable: string;
+          // categoria: string;
+          // producto: string;
+          // marca: string;
+          // serial: string;
+          // detalle: string;
+          // imagen: string;
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let inventario of listadoinventario" class="tablas">
+          <td>{{ inventario.id_proyecto }}</td>
+          <td>{{ inventario.responsable }}</td>
+          <td>{{ inventario.categoria }}</td>
+          <td>{{ inventario.producto }}</td>
+          <td>{{ inventario.marca }}</td>
+          <td>{{ inventario.serial }}</td>
+          <td>{{ inventario.detalle }}</td>
+          <td>{{ inventario.imagen }}</td>
+          <!-- <td>{{ usuario.rol.nombre }}</td>
+          <td>{{ usuario.estado.nombre_estado }}</td> -->
+          <td>
+            <button class="btn btn-warning p-button-rounded m-2" (click)="eliminarInventario(inventario.id_proyecto)">
+              <i class="pi pi-trash"></i>
+            </button>
+            <button class="btn btn-warning p-button-rounded m-2" (click)="editinventario(inventario)" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+              <i class="pi pi-pencil"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="8">En total hay {{ listadoinventario ? listadoinventario.length : 0 }} entradas.</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+<!-- formulario Crear -->
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agregar Inventario</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="resetForm(InventarioForm)"></button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="InventarioForm" (ngSubmit)="agregarInventario()">
+          
+          <div class="mb-3">
+            <label for="responsable" class="form-label">Responsable</label>
+            <input type="text" class="form-control" id="responsable" formControlName="responsable" placeholder="Responsable" required>
+            <div class="text-danger" *ngIf="InventarioForm.get('responsable')?.hasError('required') && InventarioForm.get('responsable')?.touched">
+              Este campo es obligatorio.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="categoria" class="form-label">Categoría</label>
+            <input type="text" class="form-control" id="categoria" formControlName="categoria" placeholder="Categoría" required>
+            <div class="text-danger" *ngIf="InventarioForm.get('categoria')?.hasError('required') && InventarioForm.get('categoria')?.touched">
+              Este campo es obligatorio.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="producto" class="form-label">Producto</label>
+            <input type="text" class="form-control" id="producto" formControlName="producto" placeholder="Producto" required>
+            <div class="text-danger" *ngIf="InventarioForm.get('producto')?.hasError('required') && InventarioForm.get('producto')?.touched">
+              Este campo es obligatorio.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="marca" class="form-label">Marca</label>
+            <input type="text" class="form-control" id="marca" formControlName="marca" placeholder="Marca" required>
+            <div class="text-danger" *ngIf="InventarioForm.get('marca')?.hasError('required') && InventarioForm.get('marca')?.touched">
+              Este campo es obligatorio.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="serial" class="form-label">Serial</label>
+            <input type="text" class="form-control" id="serial" formControlName="serial" placeholder="Serial" required>
+            <div class="text-danger" *ngIf="InventarioForm.get('serial')?.hasError('required') && InventarioForm.get('serial')?.touched">
+              Este campo es obligatorio.
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="detalle" class="form-label">Detalle</label>
+            <textarea class="form-control" id="detalle" formControlName="detalle" placeholder="Detalle"></textarea>
+          </div>
+          <div class="mb-3">
+            <label for="imagen" class="form-label">Imagen</label>
+            <input type="text" class="form-control" id="imagen" formControlName="imagen" placeholder="URL de la imagen">
+          </div>
+          <div class="mb-3">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="InventarioForm.reset()">Cerrar</button>
+            <button type="submit" class="btn btn-success" [disabled]="InventarioForm.invalid">Guardar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
